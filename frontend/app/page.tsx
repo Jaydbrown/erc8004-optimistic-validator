@@ -20,7 +20,7 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen bg-neutral-950 text-neutral-100">
       <ConnectBar />
-      <main className="flex-1 max-w-5xl w-full mx-auto px-6 py-8 flex flex-col gap-6">
+      <main className="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-8 flex flex-col gap-6">
         <TaskHeader
           taskLabel={taskLabel}
           setTaskLabel={setTaskLabel}
@@ -42,7 +42,7 @@ export default function Home() {
 
         <StatusPanel requestHash={requestHash} />
       </main>
-      <footer className="border-t border-neutral-800 px-6 py-4 text-xs font-mono text-neutral-600">
+      <footer className="border-t border-neutral-800 px-4 sm:px-6 py-4 text-xs font-mono text-neutral-600">
         Local dev chain — connect the &quot;Local Dev Wallet&quot; to sign as any of Anvil&apos;s
         well-known default accounts. Never use those keys on a real chain.
       </footer>
