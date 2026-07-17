@@ -14,8 +14,8 @@ export function ConnectBar() {
   const injectedConnector = connectors.find((c) => c.id === "injected");
 
   return (
-    <div className="w-full border-b border-neutral-800 bg-neutral-950/60 px-6 py-4 flex flex-col gap-4">
-      <div className="flex flex-wrap items-center justify-between gap-3">
+    <div className="w-full border-b border-neutral-800 bg-neutral-950/60 px-4 sm:px-6 py-3 sm:py-4 flex flex-col gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div className="flex items-center gap-3">
           <span className="text-xs font-mono uppercase tracking-widest text-emerald-400">
             ERC-8004 Optimistic Validator
@@ -23,28 +23,28 @@ export function ConnectBar() {
         </div>
 
         {!isConnected ? (
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             <button
               onClick={() => mockConnector && connect({ connector: mockConnector })}
-              className="rounded border border-emerald-700 bg-emerald-950 px-3 py-1.5 text-sm text-emerald-300 hover:bg-emerald-900 transition-colors"
+              className="rounded border border-emerald-700 bg-emerald-950 px-3 py-2 text-sm text-emerald-300 hover:bg-emerald-900 transition-colors"
             >
               Connect Local Dev Wallet (Anvil)
             </button>
             <button
               onClick={() => injectedConnector && connect({ connector: injectedConnector })}
-              className="rounded border border-neutral-700 px-3 py-1.5 text-sm text-neutral-300 hover:bg-neutral-800 transition-colors"
+              className="rounded border border-neutral-700 px-3 py-2 text-sm text-neutral-300 hover:bg-neutral-800 transition-colors"
             >
               Connect Wallet
             </button>
           </div>
         ) : (
-          <div className="flex items-center gap-3 text-sm">
-            <span className="font-mono text-neutral-400">
+          <div className="flex flex-wrap items-center gap-3 text-sm">
+            <span className="font-mono text-neutral-400 break-all">
               {connector?.name} · {address?.slice(0, 6)}…{address?.slice(-4)}
             </span>
             <button
               onClick={() => disconnect()}
-              className="rounded border border-neutral-700 px-2 py-1 text-xs text-neutral-400 hover:bg-neutral-800 transition-colors"
+              className="rounded border border-neutral-700 px-2.5 py-1.5 text-xs text-neutral-400 hover:bg-neutral-800 transition-colors"
             >
               Disconnect
             </button>
@@ -60,7 +60,7 @@ export function ConnectBar() {
           <button
             key={r}
             onClick={() => setRole(r)}
-            className={`rounded-sm px-3 py-1 text-sm border transition-colors ${
+            className={`rounded-sm px-3 py-1.5 text-sm border transition-colors ${
               role === r
                 ? "border-emerald-500 bg-emerald-950 text-emerald-300"
                 : "border-neutral-800 text-neutral-400 hover:border-neutral-600"
