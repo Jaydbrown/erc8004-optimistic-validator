@@ -13,17 +13,24 @@ export function CouncilPanel() {
 
   async function resolve(truthful: boolean) {
     if (!activeAddress || !assertionId) return;
-    setLog(`Resolving override as ${truthful ? "truthful (agent wins)" : "not truthful (client wins)"}…`);
+    setLog(
+      `Resolving override as ${truthful ? "truthful (agent wins)" : "not truthful (client wins)"}…`,
+    );
     try {
       await writeAsync({
         ...contracts.escalationManager,
         functionName: "resolveOverride",
         args: [assertionId as `0x${string}`, truthful],
         account: activeAddress,
+        throwOnReceiptRevert: true,
       });
-      setLog("Override resolved. The ERC-8004 validation response has been corrected.");
+      setLog(
+        "Override resolved. The ERC-8004 validation response has been corrected.",
+      );
     } catch (err) {
-      setLog(`Error: ${(err as Error).message}`);
+      setLog(
+        `Error: ${(err as { shortMessage?: string; message: string }).shortMessage ?? (err as Error).message}`,
+      );
     }
   }
 
@@ -33,8 +40,9 @@ export function CouncilPanel() {
         Arbitration Council Actions
       </h2>
       <p className="text-xs text-neutral-600">
-        Only usable after the agent has raised a counter-dispute on this assertion. This is the rare,
-        explicitly-centralized backstop path — not the common resolution path.
+        Only usable after the agent has raised a counter-dispute on this
+        assertion. This is the rare, explicitly-centralized backstop path — not
+        the common resolution path.
       </p>
       <label className="flex flex-col gap-1 text-sm">
         <span className="text-neutral-400">Assertion ID</span>
@@ -49,14 +57,14 @@ export function CouncilPanel() {
         <button
           disabled={isPending}
           onClick={() => resolve(true)}
-          className="rounded border border-emerald-700 bg-emerald-950 px-3 py-2 text-sm text-emerald-300 hover:bg-emerald-900 disabled:opacity-50 transition-colors"
+          className="rounded border border-emerald-700 bg-emerald-950 px-3 py-2.5 text-sm text-emerald-300 hover:bg-emerald-900 disabled:opacity-50 transition-colors"
         >
           Override → Agent was right
         </button>
         <button
           disabled={isPending}
           onClick={() => resolve(false)}
-          className="rounded border border-red-800 bg-red-950 px-3 py-2 text-sm text-red-300 hover:bg-red-900 disabled:opacity-50 transition-colors"
+          className="rounded border border-red-800 bg-red-950 px-3 py-2.5 text-sm text-red-300 hover:bg-red-900 disabled:opacity-50 transition-colors"
         >
           Override → Client was right
         </button>

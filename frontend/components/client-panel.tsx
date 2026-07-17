@@ -1,7 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { useAccount, useReadContract, useSignTypedData, useWriteContractSync } from "wagmi";
+import {
+  useAccount,
+  useReadContract,
+  useSignTypedData,
+  useWriteContractSync,
+} from "wagmi";
 import { parseUnits } from "viem";
 import { contracts, taskEngagementTypes } from "@/lib/contracts";
 import { appChain } from "@/lib/chains";
@@ -27,7 +32,9 @@ export function ClientPanel({ requestHash, agentId, deadline }: Props) {
   const { data: allowance } = useReadContract({
     ...contracts.paymentToken,
     functionName: "allowance",
-    args: activeAddress ? [activeAddress, contracts.taskEscrow.address] : undefined,
+    args: activeAddress
+      ? [activeAddress, contracts.taskEscrow.address]
+      : undefined,
     query: { enabled: !!activeAddress },
   });
 
@@ -43,18 +50,27 @@ export function ClientPanel({ requestHash, agentId, deadline }: Props) {
           functionName: "approve",
           args: [contracts.taskEscrow.address, amountWei],
           account: activeAddress,
+          throwOnReceiptRevert: true,
         });
       }
       setLog("Locking payment in TaskEscrow…");
       await writeAsync({
         ...contracts.taskEscrow,
         functionName: "fundTask",
-        args: [requestHash, agentAddress as `0x${string}`, contracts.paymentToken.address, amountWei],
+        args: [
+          requestHash,
+          agentAddress as `0x${string}`,
+          contracts.paymentToken.address,
+          amountWei,
+        ],
         account: activeAddress,
+        throwOnReceiptRevert: true,
       });
       setLog("Task funded.");
     } catch (err) {
-      setLog(`Error: ${(err as Error).message}`);
+      setLog(
+        `Error: ${(err as { shortMessage?: string; message: string }).shortMessage ?? (err as Error).message}`,
+      );
     }
   }
 
@@ -82,13 +98,17 @@ export function ClientPanel({ requestHash, agentId, deadline }: Props) {
       setSignature(sig);
       setLog("Signed. Copy the signature below to the agent.");
     } catch (err) {
-      setLog(`Error: ${(err as Error).message}`);
+      setLog(
+        `Error: ${(err as { shortMessage?: string; message: string }).shortMessage ?? (err as Error).message}`,
+      );
     }
   }
 
   return (
     <section className="border border-neutral-800 rounded-md p-4 flex flex-col gap-4 bg-neutral-950/40">
-      <h2 className="text-xs font-mono uppercase tracking-widest text-neutral-500">Client Actions</h2>
+      <h2 className="text-xs font-mono uppercase tracking-widest text-neutral-500">
+        Client Actions
+      </h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <label className="flex flex-col gap-1 text-sm">
@@ -101,7 +121,9 @@ export function ClientPanel({ requestHash, agentId, deadline }: Props) {
           />
         </label>
         <label className="flex flex-col gap-1 text-sm">
-          <span className="text-neutral-400">Payment amount (payment token)</span>
+          <span className="text-neutral-400">
+            Payment amount (payment token)
+          </span>
           <input
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
@@ -114,14 +136,14 @@ export function ClientPanel({ requestHash, agentId, deadline }: Props) {
         <button
           disabled={isPending}
           onClick={handleFund}
-          className="rounded border border-emerald-700 bg-emerald-950 px-3 py-2 text-sm text-emerald-300 hover:bg-emerald-900 disabled:opacity-50 transition-colors"
+          className="rounded border border-emerald-700 bg-emerald-950 px-3 py-2.5 text-sm text-emerald-300 hover:bg-emerald-900 disabled:opacity-50 transition-colors"
         >
           1. Fund Task
         </button>
         <button
           disabled={isPending}
           onClick={handleSignEngagement}
-          className="rounded border border-emerald-700 bg-emerald-950 px-3 py-2 text-sm text-emerald-300 hover:bg-emerald-900 disabled:opacity-50 transition-colors"
+          className="rounded border border-emerald-700 bg-emerald-950 px-3 py-2.5 text-sm text-emerald-300 hover:bg-emerald-900 disabled:opacity-50 transition-colors"
         >
           2. Sign TaskEngagement (EIP-712)
         </button>
@@ -129,7 +151,9 @@ export function ClientPanel({ requestHash, agentId, deadline }: Props) {
 
       {signature && (
         <label className="flex flex-col gap-1 text-sm">
-          <span className="text-neutral-400">Client signature — copy this to the Agent panel</span>
+          <span className="text-neutral-400">
+            Client signature — copy this to the Agent panel
+          </span>
           <textarea
             readOnly
             value={signature}
@@ -142,8 +166,9 @@ export function ClientPanel({ requestHash, agentId, deadline }: Props) {
       {log && <p className="text-xs font-mono text-neutral-500">{log}</p>}
 
       <p className="text-xs text-neutral-600">
-        To dispute an assertion once it exists, use the dispute action in the Status panel below —
-        only this client&apos;s address is authorized to dispute this requestHash.
+        To dispute an assertion once it exists, use the dispute action in the
+        Status panel below — only this client&apos;s address is authorized to
+        dispute this requestHash.
       </p>
     </section>
   );

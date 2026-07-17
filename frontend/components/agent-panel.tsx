@@ -31,12 +31,20 @@ export function AgentPanel({ requestHash, agentId, deadline }: Props) {
       await writeAsync({
         ...contracts.validationRegistry,
         functionName: "validationRequest",
-        args: [contracts.validator.address, BigInt(agentId || "0"), "ipfs://demo-request", requestHash],
+        args: [
+          contracts.validator.address,
+          BigInt(agentId || "0"),
+          "ipfs://demo-request",
+          requestHash,
+        ],
         account: activeAddress,
+        throwOnReceiptRevert: true,
       });
       setLog("Registered. Now propose the outcome.");
     } catch (err) {
-      setLog(`Error: ${(err as Error).message}`);
+      setLog(
+        `Error: ${(err as { shortMessage?: string; message: string }).shortMessage ?? (err as Error).message}`,
+      );
     }
   }
 
@@ -50,6 +58,7 @@ export function AgentPanel({ requestHash, agentId, deadline }: Props) {
         functionName: "approve",
         args: [contracts.validator.address, bondWei],
         account: activeAddress,
+        throwOnReceiptRevert: true,
       });
 
       setLog("Proposing outcome…");
@@ -66,10 +75,13 @@ export function AgentPanel({ requestHash, agentId, deadline }: Props) {
           bondWei,
         ],
         account: activeAddress,
+        throwOnReceiptRevert: true,
       });
       setLog(`Outcome proposed. Tx: ${receipt.transactionHash}`);
     } catch (err) {
-      setLog(`Error: ${(err as Error).message}`);
+      setLog(
+        `Error: ${(err as { shortMessage?: string; message: string }).shortMessage ?? (err as Error).message}`,
+      );
     }
   }
 
@@ -82,28 +94,37 @@ export function AgentPanel({ requestHash, agentId, deadline }: Props) {
         functionName: "counterDispute",
         args: [assertionId as `0x${string}`, evidenceURI],
         account: activeAddress,
+        throwOnReceiptRevert: true,
       });
-      setLog("Counter-dispute raised — the arbitration council can now resolve it.");
+      setLog(
+        "Counter-dispute raised — the arbitration council can now resolve it.",
+      );
     } catch (err) {
-      setLog(`Error: ${(err as Error).message}`);
+      setLog(
+        `Error: ${(err as { shortMessage?: string; message: string }).shortMessage ?? (err as Error).message}`,
+      );
     }
   }
 
   return (
     <section className="border border-neutral-800 rounded-md p-4 flex flex-col gap-4 bg-neutral-950/40">
-      <h2 className="text-xs font-mono uppercase tracking-widest text-neutral-500">Agent Actions</h2>
+      <h2 className="text-xs font-mono uppercase tracking-widest text-neutral-500">
+        Agent Actions
+      </h2>
 
       <button
         disabled={isPending}
         onClick={handleRegisterRequest}
-        className="self-start rounded border border-emerald-700 bg-emerald-950 px-3 py-2 text-sm text-emerald-300 hover:bg-emerald-900 disabled:opacity-50 transition-colors"
+        className="self-start rounded border border-emerald-700 bg-emerald-950 px-3 py-2.5 text-sm text-emerald-300 hover:bg-emerald-900 disabled:opacity-50 transition-colors"
       >
         1. Register request with ValidationRegistry
       </button>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <label className="flex flex-col gap-1 text-sm">
-          <span className="text-neutral-400">Client address (bound signer)</span>
+          <span className="text-neutral-400">
+            Client address (bound signer)
+          </span>
           <input
             value={clientAddress}
             onChange={(e) => setClientAddress(e.target.value)}
@@ -120,7 +141,9 @@ export function AgentPanel({ requestHash, agentId, deadline }: Props) {
           />
         </label>
         <label className="flex flex-col gap-1 text-sm sm:col-span-2">
-          <span className="text-neutral-400">Client signature (pasted from Client panel)</span>
+          <span className="text-neutral-400">
+            Client signature (pasted from Client panel)
+          </span>
           <textarea
             value={clientSig}
             onChange={(e) => setClientSig(e.target.value)}
@@ -141,15 +164,16 @@ export function AgentPanel({ requestHash, agentId, deadline }: Props) {
       <button
         disabled={isPending}
         onClick={handlePropose}
-        className="self-start rounded border border-emerald-700 bg-emerald-950 px-3 py-2 text-sm text-emerald-300 hover:bg-emerald-900 disabled:opacity-50 transition-colors"
+        className="self-start rounded border border-emerald-700 bg-emerald-950 px-3 py-2.5 text-sm text-emerald-300 hover:bg-emerald-900 disabled:opacity-50 transition-colors"
       >
         2. Propose Outcome (bonds and asserts)
       </button>
 
       <div className="border-t border-neutral-800 pt-3 flex flex-col gap-2">
         <p className="text-xs text-neutral-600">
-          If the client disputed in bad faith, raise a counter-dispute (only the original agent may
-          do this) — the arbitration council can then override the resolution.
+          If the client disputed in bad faith, raise a counter-dispute (only the
+          original agent may do this) — the arbitration council can then
+          override the resolution.
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <label className="flex flex-col gap-1 text-sm">
@@ -173,7 +197,7 @@ export function AgentPanel({ requestHash, agentId, deadline }: Props) {
         <button
           disabled={isPending}
           onClick={handleCounterDispute}
-          className="self-start rounded border border-amber-700 bg-amber-950 px-3 py-2 text-sm text-amber-300 hover:bg-amber-900 disabled:opacity-50 transition-colors"
+          className="self-start rounded border border-amber-700 bg-amber-950 px-3 py-2.5 text-sm text-amber-300 hover:bg-amber-900 disabled:opacity-50 transition-colors"
         >
           Raise Counter-Dispute
         </button>
