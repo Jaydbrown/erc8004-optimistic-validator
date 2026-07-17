@@ -15,12 +15,11 @@ export const contracts = {
     address: requireAddress("BONDED_ASSERTION", process.env.NEXT_PUBLIC_BONDED_ASSERTION_ADDRESS),
     abi: BondedAssertionAbi,
   },
-  bondToken: {
-    address: requireAddress("BOND_TOKEN", process.env.NEXT_PUBLIC_BOND_TOKEN_ADDRESS),
-    abi: MockERC20Abi,
-  },
-  paymentToken: {
-    address: requireAddress("PAYMENT_TOKEN", process.env.NEXT_PUBLIC_PAYMENT_TOKEN_ADDRESS),
+  // Bonds and payments both settle in the same MON-denominated token — this
+  // project targets Monad, so the unit of value throughout is MON, not two
+  // arbitrary separate mock assets.
+  monToken: {
+    address: requireAddress("MON_TOKEN", process.env.NEXT_PUBLIC_MON_TOKEN_ADDRESS),
     abi: MockERC20Abi,
   },
   validationRegistry: {

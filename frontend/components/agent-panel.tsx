@@ -50,11 +50,11 @@ export function AgentPanel({ requestHash, agentId, deadline }: Props) {
 
   async function handlePropose() {
     if (!activeAddress || !clientAddress || !clientSig) return;
-    setLog("Approving bond token…");
+    setLog("Approving MON…");
     try {
       const bondWei = parseUnits(bond || "0", 18);
       await writeAsync({
-        ...contracts.bondToken,
+        ...contracts.monToken,
         functionName: "approve",
         args: [contracts.validator.address, bondWei],
         account: activeAddress,
@@ -133,7 +133,7 @@ export function AgentPanel({ requestHash, agentId, deadline }: Props) {
           />
         </label>
         <label className="flex flex-col gap-1 text-sm">
-          <span className="text-neutral-400">Bond amount (bond token)</span>
+          <span className="text-neutral-400">Bond amount (MON)</span>
           <input
             value={bond}
             onChange={(e) => setBond(e.target.value)}

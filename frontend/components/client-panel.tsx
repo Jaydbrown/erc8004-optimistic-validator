@@ -30,7 +30,7 @@ export function ClientPanel({ requestHash, agentId, deadline }: Props) {
   const { mutateAsync: writeAsync, isPending } = useWriteContractSync();
 
   const { data: allowance } = useReadContract({
-    ...contracts.paymentToken,
+    ...contracts.monToken,
     functionName: "allowance",
     args: activeAddress
       ? [activeAddress, contracts.taskEscrow.address]
@@ -44,9 +44,9 @@ export function ClientPanel({ requestHash, agentId, deadline }: Props) {
     try {
       const amountWei = parseUnits(amount || "0", 18);
       if (!allowance || (allowance as bigint) < amountWei) {
-        setLog("Approving payment token…");
+        setLog("Approving MON…");
         await writeAsync({
-          ...contracts.paymentToken,
+          ...contracts.monToken,
           functionName: "approve",
           args: [contracts.taskEscrow.address, amountWei],
           account: activeAddress,
@@ -60,7 +60,7 @@ export function ClientPanel({ requestHash, agentId, deadline }: Props) {
         args: [
           requestHash,
           agentAddress as `0x${string}`,
-          contracts.paymentToken.address,
+          contracts.monToken.address,
           amountWei,
         ],
         account: activeAddress,
@@ -121,9 +121,7 @@ export function ClientPanel({ requestHash, agentId, deadline }: Props) {
           />
         </label>
         <label className="flex flex-col gap-1 text-sm">
-          <span className="text-neutral-400">
-            Payment amount (payment token)
-          </span>
+          <span className="text-neutral-400">Payment amount (MON)</span>
           <input
             value={amount}
             onChange={(e) => setAmount(e.target.value)}

@@ -150,7 +150,7 @@ export function StatusPanel({ requestHash }: Props) {
             agent: {task?.agent ?? "—"}
           </span>
           <span className="font-mono text-xs text-neutral-500">
-            amount: {task ? formatUnits(task.amount, 18) : "—"}
+            amount: {task ? `${formatUnits(task.amount, 18)} MON` : "—"}
           </span>
         </div>
 

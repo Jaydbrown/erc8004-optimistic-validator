@@ -22,8 +22,9 @@ bonded-assertion + escrow flow from the browser instead of `cast`.
    ```
 
    That private key is Anvil's well-known default account #0 — public,
-   zero-value, safe for local dev only. The script also mints demo bond/payment
-   tokens to Anvil's account #1 (agent) and #2 (client).
+   zero-value, safe for local dev only. The script also mints a demo MON
+   token (both bonds and payments settle in it — this project targets
+   Monad) to Anvil's account #1 (agent) and #2 (client).
 
 3. Copy the addresses the script logs into `frontend/.env.local` (see
    `.env.example` for the shape).
