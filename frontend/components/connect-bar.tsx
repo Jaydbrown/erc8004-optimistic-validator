@@ -3,6 +3,7 @@
 import { useAccount, useConnect, useDisconnect } from "wagmi";
 import { useRole } from "@/contexts/role-context";
 import { ROLE_LABELS, type Role } from "@/lib/demo-accounts";
+import { isLocalAnvil } from "@/lib/chains";
 
 export function ConnectBar() {
   const { address, isConnected, connector } = useAccount();
@@ -24,14 +25,16 @@ export function ConnectBar() {
 
         {!isConnected ? (
           <div className="flex flex-wrap gap-2">
-            <button
-              onClick={() =>
-                mockConnector && connect({ connector: mockConnector })
-              }
-              className="rounded border border-emerald-700 bg-emerald-950 px-3 py-2.5 text-sm text-emerald-300 hover:bg-emerald-900 transition-colors"
-            >
-              Connect Local Dev Wallet (Anvil)
-            </button>
+            {isLocalAnvil && (
+              <button
+                onClick={() =>
+                  mockConnector && connect({ connector: mockConnector })
+                }
+                className="rounded border border-emerald-700 bg-emerald-950 px-3 py-2.5 text-sm text-emerald-300 hover:bg-emerald-900 transition-colors"
+              >
+                Connect Local Dev Wallet (Anvil)
+              </button>
+            )}
             <button
               onClick={() =>
                 injectedConnector && connect({ connector: injectedConnector })
