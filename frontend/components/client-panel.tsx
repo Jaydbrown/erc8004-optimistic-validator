@@ -39,7 +39,14 @@ export function ClientPanel({ requestHash, agentId, deadline }: Props) {
   });
 
   async function handleFund() {
-    if (!activeAddress || !agentAddress) return;
+    if (!activeAddress) {
+      setLog("Connect a wallet first.");
+      return;
+    }
+    if (!agentAddress) {
+      setLog("Enter an agent address first.");
+      return;
+    }
     setLog("Funding task…");
     try {
       const amountWei = parseUnits(amount || "0", 18);
@@ -75,7 +82,10 @@ export function ClientPanel({ requestHash, agentId, deadline }: Props) {
   }
 
   async function handleSignEngagement() {
-    if (!activeAddress) return;
+    if (!activeAddress) {
+      setLog("Connect a wallet first.");
+      return;
+    }
     setLog("Signing TaskEngagement…");
     try {
       const sig = await signTypedDataAsync({

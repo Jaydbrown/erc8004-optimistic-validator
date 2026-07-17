@@ -12,7 +12,14 @@ export function CouncilPanel() {
   const { mutateAsync: writeAsync, isPending } = useWriteContractSync();
 
   async function resolve(truthful: boolean) {
-    if (!activeAddress || !assertionId) return;
+    if (!activeAddress) {
+      setLog("Connect a wallet first.");
+      return;
+    }
+    if (!assertionId) {
+      setLog("Enter an assertion ID first (see Status panel).");
+      return;
+    }
     setLog(
       `Resolving override as ${truthful ? "truthful (agent wins)" : "not truthful (client wins)"}…`,
     );

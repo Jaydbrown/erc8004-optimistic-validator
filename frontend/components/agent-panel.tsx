@@ -25,7 +25,10 @@ export function AgentPanel({ requestHash, agentId, deadline }: Props) {
   const { mutateAsync: writeAsync, isPending } = useWriteContractSync();
 
   async function handleRegisterRequest() {
-    if (!activeAddress) return;
+    if (!activeAddress) {
+      setLog("Connect a wallet first.");
+      return;
+    }
     setLog("Registering request with the ValidationRegistry…");
     try {
       await writeAsync({
@@ -49,7 +52,18 @@ export function AgentPanel({ requestHash, agentId, deadline }: Props) {
   }
 
   async function handlePropose() {
-    if (!activeAddress || !clientAddress || !clientSig) return;
+    if (!activeAddress) {
+      setLog("Connect a wallet first.");
+      return;
+    }
+    if (!clientAddress) {
+      setLog("Enter the client's address first.");
+      return;
+    }
+    if (!clientSig) {
+      setLog("Paste the client's signature first.");
+      return;
+    }
     setLog("Approving MON…");
     try {
       const bondWei = parseUnits(bond || "0", 18);
@@ -86,7 +100,14 @@ export function AgentPanel({ requestHash, agentId, deadline }: Props) {
   }
 
   async function handleCounterDispute() {
-    if (!activeAddress || !assertionId) return;
+    if (!activeAddress) {
+      setLog("Connect a wallet first.");
+      return;
+    }
+    if (!assertionId) {
+      setLog("Enter an assertion ID first (see Status panel).");
+      return;
+    }
     setLog("Raising counter-dispute…");
     try {
       await writeAsync({

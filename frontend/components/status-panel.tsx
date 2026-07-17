@@ -62,7 +62,16 @@ export function StatusPanel({ requestHash }: Props) {
   }
 
   async function handleDisputeAssertion() {
-    if (!activeAddress || !assertionId) return;
+    if (!activeAddress) {
+      setLog("Connect a wallet first.");
+      return;
+    }
+    if (!assertionId) {
+      setLog(
+        "No assertion exists yet for this task — propose an outcome first.",
+      );
+      return;
+    }
     setLog("Disputing assertion…");
     try {
       await writeAsync({
@@ -82,7 +91,16 @@ export function StatusPanel({ requestHash }: Props) {
   }
 
   async function handleSettleAssertion() {
-    if (!activeAddress || !assertionId) return;
+    if (!activeAddress) {
+      setLog("Connect a wallet first.");
+      return;
+    }
+    if (!assertionId) {
+      setLog(
+        "No assertion exists yet for this task — propose an outcome first.",
+      );
+      return;
+    }
     setLog("Settling assertion (liveness must have expired)…");
     try {
       await writeAsync({
@@ -102,7 +120,10 @@ export function StatusPanel({ requestHash }: Props) {
   }
 
   async function handleSettleEscrow() {
-    if (!activeAddress) return;
+    if (!activeAddress) {
+      setLog("Connect a wallet first.");
+      return;
+    }
     setLog("Settling escrow…");
     try {
       await writeAsync({
