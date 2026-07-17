@@ -30,7 +30,9 @@ export function useTaskIdentityValues(
     const hours = Number(deadlineHours || "1");
     // Intentional: syncing to the client's wall clock, unknowable during SSR.
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    setDeadline(BigInt(Math.floor(Date.now() / 1000) + Math.max(hours, 0) * 3600));
+    setDeadline(
+      BigInt(Math.floor(Date.now() / 1000) + Math.max(hours, 0) * 3600),
+    );
   }, [deadlineHours]);
 
   return { requestHash, deadline };
@@ -44,7 +46,9 @@ export function TaskHeader(props: TaskIdentity) {
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
         <label className="flex flex-col gap-1 text-sm">
-          <span className="text-neutral-400">Task label (any string — hashed client-side)</span>
+          <span className="text-neutral-400">
+            Task label (any string — hashed client-side)
+          </span>
           <input
             value={props.taskLabel}
             onChange={(e) => props.setTaskLabel(e.target.value)}
@@ -61,7 +65,9 @@ export function TaskHeader(props: TaskIdentity) {
           />
         </label>
         <label className="flex flex-col gap-1 text-sm">
-          <span className="text-neutral-400">Engagement deadline (hours from now)</span>
+          <span className="text-neutral-400">
+            Engagement deadline (hours from now)
+          </span>
           <input
             value={props.deadlineHours}
             onChange={(e) => props.setDeadlineHours(e.target.value)}
@@ -70,9 +76,11 @@ export function TaskHeader(props: TaskIdentity) {
         </label>
       </div>
       <div className="text-xs font-mono text-neutral-500 break-all">
-        requestHash: <span className="text-emerald-400">{props.requestHash}</span>
+        requestHash:{" "}
+        <span className="text-emerald-400">{props.requestHash}</span>
         {"  ·  "}
-        deadline (unix): <span className="text-emerald-400">{props.deadline.toString()}</span>
+        deadline (unix):{" "}
+        <span className="text-emerald-400">{props.deadline.toString()}</span>
       </div>
     </section>
   );

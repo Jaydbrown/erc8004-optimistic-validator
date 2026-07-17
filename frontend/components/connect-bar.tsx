@@ -25,14 +25,18 @@ export function ConnectBar() {
         {!isConnected ? (
           <div className="flex flex-wrap gap-2">
             <button
-              onClick={() => mockConnector && connect({ connector: mockConnector })}
-              className="rounded border border-emerald-700 bg-emerald-950 px-3 py-2 text-sm text-emerald-300 hover:bg-emerald-900 transition-colors"
+              onClick={() =>
+                mockConnector && connect({ connector: mockConnector })
+              }
+              className="rounded border border-emerald-700 bg-emerald-950 px-3 py-2.5 text-sm text-emerald-300 hover:bg-emerald-900 transition-colors"
             >
               Connect Local Dev Wallet (Anvil)
             </button>
             <button
-              onClick={() => injectedConnector && connect({ connector: injectedConnector })}
-              className="rounded border border-neutral-700 px-3 py-2 text-sm text-neutral-300 hover:bg-neutral-800 transition-colors"
+              onClick={() =>
+                injectedConnector && connect({ connector: injectedConnector })
+              }
+              className="rounded border border-neutral-700 px-3 py-2.5 text-sm text-neutral-300 hover:bg-neutral-800 transition-colors"
             >
               Connect Wallet
             </button>
@@ -44,7 +48,7 @@ export function ConnectBar() {
             </span>
             <button
               onClick={() => disconnect()}
-              className="rounded border border-neutral-700 px-2.5 py-1.5 text-xs text-neutral-400 hover:bg-neutral-800 transition-colors"
+              className="rounded border border-neutral-700 px-3 py-3 text-xs text-neutral-400 hover:bg-neutral-800 transition-colors"
             >
               Disconnect
             </button>
@@ -60,7 +64,7 @@ export function ConnectBar() {
           <button
             key={r}
             onClick={() => setRole(r)}
-            className={`rounded-sm px-3 py-1.5 text-sm border transition-colors ${
+            className={`rounded-sm px-3 py-2.5 text-sm border transition-colors ${
               role === r
                 ? "border-emerald-500 bg-emerald-950 text-emerald-300"
                 : "border-neutral-800 text-neutral-400 hover:border-neutral-600"
