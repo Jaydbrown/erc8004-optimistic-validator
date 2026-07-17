@@ -33,7 +33,7 @@ contract ERC8004OptimisticValidatorTest is Test {
 
     function setUp() public {
         bondedAssertion = new BondedAssertion();
-        token = new MockERC20();
+        token = new MockERC20("Test Token", "TEST");
         registry = new MockValidationRegistry();
         validator =
             new ERC8004OptimisticValidator(address(registry), address(bondedAssertion), address(token), LIVENESS);

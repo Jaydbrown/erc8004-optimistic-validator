@@ -25,7 +25,7 @@ contract BondedAssertionTest is Test {
 
     function setUp() public {
         bondedAssertion = new BondedAssertion();
-        token = new MockERC20();
+        token = new MockERC20("Test Token", "TEST");
         policy = new MockEscalationPolicy();
 
         token.mint(asserter, 10_000e18);

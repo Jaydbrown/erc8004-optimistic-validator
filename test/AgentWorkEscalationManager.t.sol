@@ -26,7 +26,7 @@ contract AgentWorkEscalationManagerTest is Test {
     function setUp() public {
         bondedAssertion = new BondedAssertion();
         manager = new AgentWorkEscalationManager(address(bondedAssertion), registrar, council);
-        token = new MockERC20();
+        token = new MockERC20("Test Token", "TEST");
 
         token.mint(agent, 10_000e18);
         vm.prank(agent);

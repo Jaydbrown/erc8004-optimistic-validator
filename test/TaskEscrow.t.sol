@@ -37,8 +37,8 @@ contract TaskEscrowTest is Test {
 
     function setUp() public {
         bondedAssertion = new BondedAssertion();
-        bondToken = new MockERC20();
-        paymentToken = new MockERC20();
+        bondToken = new MockERC20("Test Token", "TEST");
+        paymentToken = new MockERC20("Test Token", "TEST");
         registry = new MockValidationRegistry();
         validator =
             new ERC8004OptimisticValidator(address(registry), address(bondedAssertion), address(bondToken), LIVENESS);
