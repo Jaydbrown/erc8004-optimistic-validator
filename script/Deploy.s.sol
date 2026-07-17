@@ -11,10 +11,16 @@ import {MockERC20} from "../test/mocks/MockERC20.sol";
 import {MockValidationRegistry} from "../test/mocks/MockValidationRegistry.sol";
 
 /// @notice Deploys the full stack to whatever chain RPC_URL points at.
-/// Local-dev only: mints bond/payment tokens to Anvil's well-known default
-/// test accounts (#1 as "agent", #2 as "client") so the frontend has
+/// Local-dev only: mints a MON-denominated token to Anvil's well-known
+/// default test accounts (#1 as "agent", #2 as "client") so the frontend has
 /// something to interact with immediately. Never run this against a chain
 /// where those addresses hold anything real.
+///
+/// Bonds and payments both settle in the same token, deployed here as
+/// "Wrapped MON" — this project targets Monad, so the unit of value
+/// throughout the app is MON, not an arbitrary mock asset. On a real Monad
+/// deployment, swap this for the canonical WMON address (or move bonding to
+/// native MON directly) rather than deploying a fresh mock.
 contract Deploy is Script {
     uint64 internal constant LIVENESS = 5 minutes;
 
@@ -27,12 +33,11 @@ contract Deploy is Script {
         vm.startBroadcast();
 
         BondedAssertion bondedAssertion = new BondedAssertion();
-        MockERC20 bondToken = new MockERC20();
-        MockERC20 paymentToken = new MockERC20();
+        MockERC20 monToken = new MockERC20("Wrapped MON", "WMON");
         MockValidationRegistry registry = new MockValidationRegistry();
 
         ERC8004OptimisticValidator validator =
-            new ERC8004OptimisticValidator(address(registry), address(bondedAssertion), address(bondToken), LIVENESS);
+            new ERC8004OptimisticValidator(address(registry), address(bondedAssertion), address(monToken), LIVENESS);
 
         AgentWorkEscalationManager manager =
             new AgentWorkEscalationManager(address(bondedAssertion), address(validator), ANVIL_COUNCIL);
@@ -42,14 +47,13 @@ contract Deploy is Script {
         TaskEscrow escrow = new TaskEscrow(address(validator), address(bondedAssertion));
 
         // Seed the demo accounts so the frontend has funds to click through with.
-        bondToken.mint(ANVIL_AGENT, 100_000e18);
-        paymentToken.mint(ANVIL_CLIENT, 100_000e18);
+        monToken.mint(ANVIL_AGENT, 100_000e18);
+        monToken.mint(ANVIL_CLIENT, 100_000e18);
 
         vm.stopBroadcast();
 
         console.log("BondedAssertion:            ", address(bondedAssertion));
-        console.log("BondToken (MOCK):           ", address(bondToken));
-        console.log("PaymentToken (MOCK):        ", address(paymentToken));
+        console.log("MON token (WMON):           ", address(monToken));
         console.log("MockValidationRegistry:     ", address(registry));
         console.log("ERC8004OptimisticValidator: ", address(validator));
         console.log("AgentWorkEscalationManager: ", address(manager));
