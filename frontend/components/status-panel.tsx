@@ -111,19 +111,19 @@ export function StatusPanel({ requestHash }: Props) {
 
   return (
     <section className="border border-neutral-800 rounded-md p-4 flex flex-col gap-4 bg-neutral-950/40">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-wrap items-center justify-between gap-2">
         <h2 className="text-xs font-mono uppercase tracking-widest text-neutral-500">
           Status — anyone may trigger settlement below
         </h2>
         <button
           onClick={() => refetchAll()}
-          className="text-xs font-mono text-neutral-500 border border-neutral-800 rounded px-2 py-1 hover:bg-neutral-900"
+          className="text-xs font-mono text-neutral-500 border border-neutral-800 rounded px-2.5 py-1.5 hover:bg-neutral-900"
         >
           Refresh
         </button>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
         <div className="flex flex-col gap-1">
           <span className="text-xs font-mono uppercase text-neutral-600">TaskEscrow</span>
           <span>Status: <b>{task ? TASK_STATUS[task.status] : "—"}</b></span>
@@ -171,21 +171,21 @@ export function StatusPanel({ requestHash }: Props) {
         <button
           disabled={isPending || !hasAssertion}
           onClick={handleDisputeAssertion}
-          className="rounded border border-red-800 bg-red-950 px-3 py-1.5 text-sm text-red-300 hover:bg-red-900 disabled:opacity-50 transition-colors"
+          className="rounded border border-red-800 bg-red-950 px-3 py-2 text-sm text-red-300 hover:bg-red-900 disabled:opacity-50 transition-colors"
         >
           Dispute Assertion (client only)
         </button>
         <button
           disabled={isPending || !hasAssertion}
           onClick={handleSettleAssertion}
-          className="rounded border border-neutral-700 px-3 py-1.5 text-sm text-neutral-300 hover:bg-neutral-800 disabled:opacity-50 transition-colors"
+          className="rounded border border-neutral-700 px-3 py-2 text-sm text-neutral-300 hover:bg-neutral-800 disabled:opacity-50 transition-colors"
         >
           Settle Assertion (after liveness)
         </button>
         <button
           disabled={isPending || task?.status !== 1}
           onClick={handleSettleEscrow}
-          className="rounded border border-neutral-700 px-3 py-1.5 text-sm text-neutral-300 hover:bg-neutral-800 disabled:opacity-50 transition-colors"
+          className="rounded border border-neutral-700 px-3 py-2 text-sm text-neutral-300 hover:bg-neutral-800 disabled:opacity-50 transition-colors"
         >
           Settle Escrow (release/refund payment)
         </button>

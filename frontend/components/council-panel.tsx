@@ -42,21 +42,21 @@ export function CouncilPanel() {
           value={assertionId}
           onChange={(e) => setAssertionId(e.target.value)}
           placeholder="0x… (see Status panel)"
-          className="rounded border border-neutral-700 bg-neutral-900 px-2 py-1.5 font-mono text-xs"
+          className="w-full rounded border border-neutral-700 bg-neutral-900 px-2 py-1.5 font-mono text-xs"
         />
       </label>
-      <div className="flex gap-2">
+      <div className="flex flex-wrap gap-2">
         <button
           disabled={isPending}
           onClick={() => resolve(true)}
-          className="rounded border border-emerald-700 bg-emerald-950 px-3 py-1.5 text-sm text-emerald-300 hover:bg-emerald-900 disabled:opacity-50 transition-colors"
+          className="rounded border border-emerald-700 bg-emerald-950 px-3 py-2 text-sm text-emerald-300 hover:bg-emerald-900 disabled:opacity-50 transition-colors"
         >
           Override → Agent was right
         </button>
         <button
           disabled={isPending}
           onClick={() => resolve(false)}
-          className="rounded border border-red-800 bg-red-950 px-3 py-1.5 text-sm text-red-300 hover:bg-red-900 disabled:opacity-50 transition-colors"
+          className="rounded border border-red-800 bg-red-950 px-3 py-2 text-sm text-red-300 hover:bg-red-900 disabled:opacity-50 transition-colors"
         >
           Override → Client was right
         </button>

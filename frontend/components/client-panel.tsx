@@ -97,7 +97,7 @@ export function ClientPanel({ requestHash, agentId, deadline }: Props) {
             value={agentAddress}
             onChange={(e) => setAgentAddress(e.target.value)}
             placeholder="0x…"
-            className="rounded border border-neutral-700 bg-neutral-900 px-2 py-1.5 font-mono text-sm"
+            className="w-full rounded border border-neutral-700 bg-neutral-900 px-2 py-1.5 font-mono text-sm"
           />
         </label>
         <label className="flex flex-col gap-1 text-sm">
@@ -105,7 +105,7 @@ export function ClientPanel({ requestHash, agentId, deadline }: Props) {
           <input
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
-            className="rounded border border-neutral-700 bg-neutral-900 px-2 py-1.5 font-mono text-sm"
+            className="w-full rounded border border-neutral-700 bg-neutral-900 px-2 py-1.5 font-mono text-sm"
           />
         </label>
       </div>
@@ -114,14 +114,14 @@ export function ClientPanel({ requestHash, agentId, deadline }: Props) {
         <button
           disabled={isPending}
           onClick={handleFund}
-          className="rounded border border-emerald-700 bg-emerald-950 px-3 py-1.5 text-sm text-emerald-300 hover:bg-emerald-900 disabled:opacity-50 transition-colors"
+          className="rounded border border-emerald-700 bg-emerald-950 px-3 py-2 text-sm text-emerald-300 hover:bg-emerald-900 disabled:opacity-50 transition-colors"
         >
           1. Fund Task
         </button>
         <button
           disabled={isPending}
           onClick={handleSignEngagement}
-          className="rounded border border-emerald-700 bg-emerald-950 px-3 py-1.5 text-sm text-emerald-300 hover:bg-emerald-900 disabled:opacity-50 transition-colors"
+          className="rounded border border-emerald-700 bg-emerald-950 px-3 py-2 text-sm text-emerald-300 hover:bg-emerald-900 disabled:opacity-50 transition-colors"
         >
           2. Sign TaskEngagement (EIP-712)
         </button>
@@ -133,7 +133,7 @@ export function ClientPanel({ requestHash, agentId, deadline }: Props) {
           <textarea
             readOnly
             value={signature}
-            className="rounded border border-neutral-700 bg-neutral-900 px-2 py-1.5 font-mono text-xs break-all"
+            className="w-full rounded border border-neutral-700 bg-neutral-900 px-2 py-1.5 font-mono text-xs break-all resize-y"
             rows={3}
           />
         </label>

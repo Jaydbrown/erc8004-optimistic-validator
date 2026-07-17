@@ -96,7 +96,7 @@ export function AgentPanel({ requestHash, agentId, deadline }: Props) {
       <button
         disabled={isPending}
         onClick={handleRegisterRequest}
-        className="self-start rounded border border-emerald-700 bg-emerald-950 px-3 py-1.5 text-sm text-emerald-300 hover:bg-emerald-900 disabled:opacity-50 transition-colors"
+        className="self-start rounded border border-emerald-700 bg-emerald-950 px-3 py-2 text-sm text-emerald-300 hover:bg-emerald-900 disabled:opacity-50 transition-colors"
       >
         1. Register request with ValidationRegistry
       </button>
@@ -108,7 +108,7 @@ export function AgentPanel({ requestHash, agentId, deadline }: Props) {
             value={clientAddress}
             onChange={(e) => setClientAddress(e.target.value)}
             placeholder="0x…"
-            className="rounded border border-neutral-700 bg-neutral-900 px-2 py-1.5 font-mono text-sm"
+            className="w-full rounded border border-neutral-700 bg-neutral-900 px-2 py-1.5 font-mono text-sm"
           />
         </label>
         <label className="flex flex-col gap-1 text-sm">
@@ -116,7 +116,7 @@ export function AgentPanel({ requestHash, agentId, deadline }: Props) {
           <input
             value={bond}
             onChange={(e) => setBond(e.target.value)}
-            className="rounded border border-neutral-700 bg-neutral-900 px-2 py-1.5 font-mono text-sm"
+            className="w-full rounded border border-neutral-700 bg-neutral-900 px-2 py-1.5 font-mono text-sm"
           />
         </label>
         <label className="flex flex-col gap-1 text-sm sm:col-span-2">
@@ -125,7 +125,7 @@ export function AgentPanel({ requestHash, agentId, deadline }: Props) {
             value={clientSig}
             onChange={(e) => setClientSig(e.target.value)}
             rows={2}
-            className="rounded border border-neutral-700 bg-neutral-900 px-2 py-1.5 font-mono text-xs break-all"
+            className="w-full rounded border border-neutral-700 bg-neutral-900 px-2 py-1.5 font-mono text-xs break-all resize-y"
           />
         </label>
         <label className="flex flex-col gap-1 text-sm sm:col-span-2">
@@ -133,7 +133,7 @@ export function AgentPanel({ requestHash, agentId, deadline }: Props) {
           <input
             value={responseURI}
             onChange={(e) => setResponseURI(e.target.value)}
-            className="rounded border border-neutral-700 bg-neutral-900 px-2 py-1.5 font-mono text-sm"
+            className="w-full rounded border border-neutral-700 bg-neutral-900 px-2 py-1.5 font-mono text-sm"
           />
         </label>
       </div>
@@ -141,7 +141,7 @@ export function AgentPanel({ requestHash, agentId, deadline }: Props) {
       <button
         disabled={isPending}
         onClick={handlePropose}
-        className="self-start rounded border border-emerald-700 bg-emerald-950 px-3 py-1.5 text-sm text-emerald-300 hover:bg-emerald-900 disabled:opacity-50 transition-colors"
+        className="self-start rounded border border-emerald-700 bg-emerald-950 px-3 py-2 text-sm text-emerald-300 hover:bg-emerald-900 disabled:opacity-50 transition-colors"
       >
         2. Propose Outcome (bonds and asserts)
       </button>
@@ -158,7 +158,7 @@ export function AgentPanel({ requestHash, agentId, deadline }: Props) {
               value={assertionId}
               onChange={(e) => setAssertionId(e.target.value)}
               placeholder="0x… (see Status panel)"
-              className="rounded border border-neutral-700 bg-neutral-900 px-2 py-1.5 font-mono text-xs"
+              className="w-full rounded border border-neutral-700 bg-neutral-900 px-2 py-1.5 font-mono text-xs"
             />
           </label>
           <label className="flex flex-col gap-1 text-sm">
@@ -166,14 +166,14 @@ export function AgentPanel({ requestHash, agentId, deadline }: Props) {
             <input
               value={evidenceURI}
               onChange={(e) => setEvidenceURI(e.target.value)}
-              className="rounded border border-neutral-700 bg-neutral-900 px-2 py-1.5 font-mono text-sm"
+              className="w-full rounded border border-neutral-700 bg-neutral-900 px-2 py-1.5 font-mono text-sm"
             />
           </label>
         </div>
         <button
           disabled={isPending}
           onClick={handleCounterDispute}
-          className="self-start rounded border border-amber-700 bg-amber-950 px-3 py-1.5 text-sm text-amber-300 hover:bg-amber-900 disabled:opacity-50 transition-colors"
+          className="self-start rounded border border-amber-700 bg-amber-950 px-3 py-2 text-sm text-amber-300 hover:bg-amber-900 disabled:opacity-50 transition-colors"
         >
           Raise Counter-Dispute
         </button>

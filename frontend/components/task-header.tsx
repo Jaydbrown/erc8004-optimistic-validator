@@ -48,7 +48,7 @@ export function TaskHeader(props: TaskIdentity) {
           <input
             value={props.taskLabel}
             onChange={(e) => props.setTaskLabel(e.target.value)}
-            className="rounded border border-neutral-700 bg-neutral-900 px-2 py-1.5 font-mono text-sm"
+            className="w-full rounded border border-neutral-700 bg-neutral-900 px-2 py-1.5 font-mono text-sm"
             placeholder="e.g. code-review-2026-07-17"
           />
         </label>
@@ -57,7 +57,7 @@ export function TaskHeader(props: TaskIdentity) {
           <input
             value={props.agentId}
             onChange={(e) => props.setAgentId(e.target.value)}
-            className="rounded border border-neutral-700 bg-neutral-900 px-2 py-1.5 font-mono text-sm"
+            className="w-full rounded border border-neutral-700 bg-neutral-900 px-2 py-1.5 font-mono text-sm"
           />
         </label>
         <label className="flex flex-col gap-1 text-sm">
@@ -65,7 +65,7 @@ export function TaskHeader(props: TaskIdentity) {
           <input
             value={props.deadlineHours}
             onChange={(e) => props.setDeadlineHours(e.target.value)}
-            className="rounded border border-neutral-700 bg-neutral-900 px-2 py-1.5 font-mono text-sm"
+            className="w-full rounded border border-neutral-700 bg-neutral-900 px-2 py-1.5 font-mono text-sm"
           />
         </label>
       </div>
